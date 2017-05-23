@@ -48,7 +48,7 @@ public class Graph extends Instance {
 	/**
 	 * Function to print the details of the graph.
 	 */
-	public void printAll(){
+	public void printDataGraph(){
 		System.out.println("\nDetails\n");
 		
 		System.out.println("Name of the problem: " + name);
