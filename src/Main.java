@@ -32,9 +32,17 @@ public class Main {
 			
 			// tsp.printData();	
 			
-			ArrayList<Integer> solutionSimulatedAnnealing =
+			ArrayList<Double> results = new ArrayList<Double> ();
+			
+			for(int i = 0; i < 100; i++) {
+				ArrayList<Integer> solutionSimulatedAnnealing =
 						tsp.simulatedAnnealing();
-			System.out.println(solutionSimulatedAnnealing);			
+			
+				results.add(tsp.calculateCostTour(solutionSimulatedAnnealing));
+			}
+						
+			Statistics statistics = new Statistics(results);
+			statistics.showStatistics();
 	    }
 	}
 }
