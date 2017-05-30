@@ -14,8 +14,11 @@
  * Main class to ejecute the program.
  */
 
+import java.util.ArrayList;
+
 import es.ull.siipc.graph.Graph;
 import es.ull.siipc.problems.TSP;
+import es.ull.siipc.statistics.Statistics;
 
 public class Main {
 	/**
@@ -26,7 +29,12 @@ public class Main {
 		if(args.length == 1) {
 			Graph graph = new Graph(args[0]);
 			TSP tsp = new TSP (graph);
-			tsp.printData();	
+			
+			// tsp.printData();	
+			
+			ArrayList<Integer> solutionSimulatedAnnealing =
+						tsp.simulatedAnnealing();
+			System.out.println(solutionSimulatedAnnealing);			
 	    }
 	}
 }
