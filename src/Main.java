@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import es.ull.siipc.graph.Graph;
 import es.ull.siipc.problems.TSP;
+import es.ull.siipc.problems.metaheuristics.tsp.SimulatedAnnealing;
 import es.ull.siipc.statistics.Statistics;
 
 public class Main {
@@ -28,17 +29,15 @@ public class Main {
 	public static void main(String[] args) {
 		if(args.length == 1) {
 			Graph graph = new Graph(args[0]);
-			TSP tsp = new TSP (graph);
-			
-			// tsp.printData();	
-			
+			SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing (graph);
+						
 			ArrayList<Double> results = new ArrayList<Double> ();
 			
 			for(int i = 0; i < 100; i++) {
 				ArrayList<Integer> solutionSimulatedAnnealing =
-						tsp.simulatedAnnealing();
+						simulatedAnnealing.solve();
 			
-				results.add(tsp.calculateCostTour(solutionSimulatedAnnealing));
+				results.add(simulatedAnnealing.calculateCostTour(solutionSimulatedAnnealing));
 			}
 						
 			Statistics statistics = new Statistics(results);
