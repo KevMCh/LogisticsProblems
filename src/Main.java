@@ -17,8 +17,7 @@
 import java.util.ArrayList;
 
 import es.ull.siipc.graph.Graph;
-import es.ull.siipc.problems.TSP;
-import es.ull.siipc.problems.metaheuristics.tsp.SimulatedAnnealing;
+import es.ull.siipc.problems.metaheuristics.tsp.*;
 import es.ull.siipc.statistics.Statistics;
 
 public class Main {
@@ -30,9 +29,13 @@ public class Main {
 		if(args.length == 1) {
 			Graph graph = new Graph(args[0]);
 			SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing (graph);
+			HillClimbing hillclimbing = new HillClimbing(graph);
 						
 			ArrayList<Double> results = new ArrayList<Double> ();
+			System.out.println("Hill Climbing");
+			hillclimbing.solve();
 			
+			System.out.println("Simulated Annealing");
 			for(int i = 0; i < 100; i++) {
 				ArrayList<Integer> solutionSimulatedAnnealing =
 						simulatedAnnealing.solve();
