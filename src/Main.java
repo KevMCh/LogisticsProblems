@@ -1,10 +1,10 @@
 /**
  * Project of metaheuristics
  * 
- * Máster Universitario en Ingeniería Informática
- * E.S.I.T.– INFORMÁ́TICA
- * Departamento de Ingeniería Informática y de Sistemas
- * Sistemas Inteligentes e Interacción Persona Computador
+ * MÃ¡ster Universitario en IngenierÃ­a InformÃ¡tica
+ * E.S.I.T.â€“ INFORMÃ�Ì�TICA
+ * Departamento de IngenierÃ­a InformÃ¡tica y de Sistemas
+ * Sistemas Inteligentes e InteracciÃ³n Persona Computador
  * 
  * Project to study of metaheuristics, it is a higher-level procedure or heuristic 
  * designed to find, generate, or select a heuristic (partial search algorithm) that
@@ -32,9 +32,14 @@ public class Main {
 			HillClimbing hillclimbing = new HillClimbing(graph);
 						
 			ArrayList<Double> results = new ArrayList<Double> ();
-			System.out.println("Hill Climbing");
-			hillclimbing.solve();
 			
+			/* Hill Climbing (local search) */
+			@SuppressWarnings("unused")
+			ArrayList<Integer> solutionsHillClimbing = new ArrayList<Integer>();
+			solutionsHillClimbing = hillclimbing.solve();
+			hillclimbing.printResult();
+			
+			/* Simulated Annealing */
 			System.out.println("Simulated Annealing");
 			for(int i = 0; i < 100; i++) {
 				ArrayList<Integer> solutionSimulatedAnnealing =
