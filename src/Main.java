@@ -30,7 +30,9 @@ public class Main {
 			Graph graph = new Graph(args[0]);
 			HillClimbing hillclimbing = new HillClimbing(graph);
 
-			hillclimbing.solve();
+			ArrayList<Integer> result = hillclimbing.solve();
+			
+			System.out.println(result);
 		}
 	}
 }

@@ -29,6 +29,7 @@ public class HillClimbing extends TSP {
 				end = true;
 			} else {
 				actualNode = getSuccessor(actualNode, list);
+				// actualNode = getSuccessorRoulette(actualNode, list);
 				list.add(actualNode);
 			}
 			
@@ -38,6 +39,116 @@ public class HillClimbing extends TSP {
 		
 	}
 	
+	/**
+	 * Get a roulette successor
+	 * @param actualNode
+	 * @param list
+	 * @return
+	 */
+	private int getSuccessorRoulette(int actualNode,  ArrayList<Integer> actualRoute) {
+		
+		Double totalCost = getTotalCost(actualNode, actualRoute);
+		
+		ArrayList<Double> probabilityCost = new ArrayList<Double> ();
+		
+		for(int i = 0; i < getTSP().getN(); i++){
+			if(isACandidate(i, actualNode, actualRoute)) {
+				
+				probabilityCost.add(getTSP().getMatrixItem(actualNode, i) / totalCost);
+			}
+		}		
+		
+		int numberRoulette = getResultOfRoulette(probabilityCost);
+		int numberPosition = 0;
+		
+		for(int i = 0; i < getTSP().getN(); i++){
+			if(isACandidate(i, actualNode, actualRoute)) {
+				
+				if(numberRoulette == numberPosition){
+					return i;
+					
+				} else {
+					numberPosition++;
+				}
+			}
+		}
+		
+		return 0;
+	}
+
+	/**
+	 * Get the result of the roulette
+	 * @return
+	 */
+	private int getResultOfRoulette(ArrayList<Double> probabilityCost) {
+		Double rouletteValue = Math.random();
+		Double values = 0.0;
+		
+		for(int i = 0; i < probabilityCost.size(); i++){
+			values += probabilityCost.get(i);
+				
+			if(values >  probabilityCost.get(i)) {
+					return i - 1;
+			}
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Function that calculate the cost to normalize the 
+	 * possible successor
+	 * 
+	 * @param actualNode
+	 * @return
+	 */
+	private Double getTotalCost(int actualNode, ArrayList<Integer> actualRoute) {
+		Double totalCost = 0.0;
+		
+		for(int i = 0; i < getTSP().getN(); i++){
+			
+			if(isACandidate(i, actualNode, actualRoute)) {
+				totalCost += getTSP().getMatrixItem(actualNode, i);
+			}
+		}
+		
+		return totalCost;
+	}
+	
+	/**
+	 * Check if a node is visited 
+	 * @return
+	 */
+	public boolean checkIsVisit(int actualNode, ArrayList<Integer> actualRoute){
+		for(int i = 0; i < actualRoute.size(); i++){
+			if(actualNode == actualRoute.get(i)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+
+	/**
+	 * Check if a node is a candidate
+	 * 
+	 * @param node
+	 * @param actualNode
+	 * @param actualRoute
+	 * @return
+	 */
+	public boolean isACandidate(int node, int actualNode, ArrayList<Integer> actualRoute){
+		
+		if((node != actualNode) && (!checkIsVisit(node, actualRoute)) && 
+		   (getTSP().getMatrixItem(node, actualNode) != Double.MAX_VALUE)) {
+
+			return true;
+		}
+		return false;
+	}
+	
+
 	public int getSuccessor(int actualNode, ArrayList<Integer> list) {
 			
 		ArrayList<Integer> listSuccessors = new ArrayList<Integer>();
