@@ -29,19 +29,22 @@ public class Main {
 	public static void main(String[] args) {
 		if(args.length == 1) {
 			Graph graph = new Graph(args[0]);
-			SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing (graph);
+			SimulatedAnnealing tspProblem = new SimulatedAnnealing (graph);
 						
 			ArrayList<Double> results = new ArrayList<Double> ();
 			
 			for(int i = 0; i < 100; i++) {
-				ArrayList<Integer> solutionSimulatedAnnealing =
-						simulatedAnnealing.solve();
+				ArrayList<Integer> finalSolution = tspProblem.randomSolution();
+				ArrayList<Integer> solutionVariableNeighborhoodSearch =
+						tspProblem.solveVariableNeighborhoodSearch(finalSolution, 32);
+						
+				// System.out.println(solutionVariableNeighborhoodSearch);
 			
-				results.add(simulatedAnnealing.calculateCostTour(solutionSimulatedAnnealing));
+				results.add(tspProblem.calculateCostTour(solutionVariableNeighborhoodSearch));
 			}
 						
 			Statistics statistics = new Statistics(results);
 			statistics.showStatistics();
-	    }
+		}
 	}
 }

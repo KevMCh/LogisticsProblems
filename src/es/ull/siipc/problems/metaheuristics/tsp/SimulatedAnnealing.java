@@ -34,8 +34,7 @@ public class SimulatedAnnealing extends TSP{
 	 * Calculate final tour using a simulated annealing algorithm
 	 * @return
 	 */
-	public ArrayList<Integer> solve() {
-		ArrayList<Integer> finalSolution = randomSolution ();	
+	public ArrayList<Integer> solveSimulatedAnnealing(ArrayList<Integer> finalSolution) {
 		ArrayList<Integer> newSolution = new ArrayList<Integer> ();
 		
 		int i = 0;
@@ -48,8 +47,16 @@ public class SimulatedAnnealing extends TSP{
 			if (costFinalSolution < costNewSolution) {
 				finalSolution = newSolution;
 			} else {
-				if(1 - (costNewSolution / costFinalSolution) > Math.random()){
-				// if((costNewSolution / costFinalSolution) > Math.random()){
+				
+				// Basic algorithm
+				if(Math.random() > 0.5){
+				
+				/*// Less importance to the worst solutions
+				 if(1 - (costNewSolution / costFinalSolution) > Math.random()){
+				 */
+				/*// Greater emphasis on the worst solutions
+				 if((costNewSolution / costFinalSolution) > Math.random()){
+				 */
 					finalSolution = newSolution;
 				}
 			}
@@ -127,5 +134,27 @@ public class SimulatedAnnealing extends TSP{
 		}
 		
 		return newRoute;
+	}
+	
+	/**
+	 * Calculate final tour using a variable neighborhood search algorithm
+	 * @return
+	 */
+	public ArrayList<Integer> solveVariableNeighborhoodSearch(ArrayList<Integer> finalSolution, int maxNeighbour){
+		int neighbour = 0;
+				
+		while (neighbour < maxNeighbour){
+			ArrayList<Integer> shakedSolution = randomSolution();
+			ArrayList<Integer> simulatedAnnealingSolution = solveSimulatedAnnealing(shakedSolution);
+			
+			if(calculateCostTour(simulatedAnnealingSolution) < calculateCostTour(finalSolution)){
+				finalSolution = simulatedAnnealingSolution;
+				neighbour = 0;
+			} else {
+				neighbour++;
+			}
+		}
+		
+		return finalSolution;
 	}
 }
