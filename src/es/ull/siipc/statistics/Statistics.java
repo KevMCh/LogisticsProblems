@@ -16,10 +16,17 @@
 
 package es.ull.siipc.statistics;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Statistics {
 	
+	private static final String STATISTICSPATH = System.getProperty("user.dir") + "/statistics/";
 	private Double better;				// Minus cost
 	private Double worse;				// Mayor cost
 	private Double average;				// Cost average
@@ -44,6 +51,73 @@ public class Statistics {
 		getAverageResult(results);
 	}
 	
+	/**
+	 * Function to save the statistics in the file
+	 * @param fileName
+	 * @param delimiter
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void saveStatistics(String fileName, String delimiter)
+			throws FileNotFoundException, IOException{
+		
+		String content = "";
+		File af = new File(STATISTICSPATH + fileName);
+		if(af.exists()){ 
+			content = readFile(STATISTICSPATH, fileName);
+		}
+		
+		writeFile(STATISTICSPATH, fileName,
+				content + getBetter() + delimiter + getWorse() + delimiter + getAverage());
+	}
+	
+	/**
+	 * Function to read a statistics file
+	 * @param fileName
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	private static String readFile(String path, String fileName)
+			throws FileNotFoundException, IOException {
+		
+		String string;
+		String finalString = "";
+
+		FileReader f = new FileReader(path + fileName);
+		if(f != null){
+			BufferedReader b = new BufferedReader(f);
+		
+			while((string = b.readLine()) != null) {
+				finalString += string + "\n";
+			}
+			
+			b.close();
+		}
+		
+		return finalString;
+	}
+	
+	/**
+	 * Function to save the data in the file
+	 * @throws FileNotFoundException 
+	 */
+	private void writeFile(String path, String fileName, String data) {
+		
+		FileWriter file = null;
+		try {
+
+			file = new FileWriter(path + fileName);
+			
+			file.write(data);
+			
+			file.close();
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+	}
+
 	/**
 	 * Function to initialice the values 
 	 */

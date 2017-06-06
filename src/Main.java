@@ -14,6 +14,7 @@
  * Main class to ejecute the program.
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import es.ull.siipc.graph.Graph;
@@ -24,28 +25,34 @@ public class Main {
 	/**
 	 * Main function of the program
 	 * @param args
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		if(args.length == 1) {
 			
 			Graph graph = new Graph(args[0]);
 			
-			for(int i = 0; i < 3; i++) {
+			// SimulatedAnnealing
+			SimulatedAnnealing problem = new SimulatedAnnealing(graph);
+
+			for(int i = 0; i < 20; i++) {
 				
 				ArrayList<Integer> solutions = new ArrayList<Integer>();
 				ArrayList<Double> results = new ArrayList<Double> ();
-				
+								
 				for(int j = 0; j < 100; j++) {
 					
+					/* // HillClimbing
 					HillClimbing problem = new HillClimbing(graph);
-					solutions = problem.solve();
-	
+					*/
+					solutions = problem.solveSimulatedAnnealing(problem.randomSolution());
+					
 					results.add(problem.calculateCostTour(solutions));
 				}
 							
 				Statistics statistics = new Statistics(results);
+				statistics.saveStatistics("burma14.SA.csv", ";");
 				statistics.showStatistics();
-				System.out.println();
 			}
 	    }
 	}

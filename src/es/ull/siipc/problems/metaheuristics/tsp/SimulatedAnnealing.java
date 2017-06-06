@@ -51,12 +51,13 @@ public class SimulatedAnnealing extends TSP{
 				// Basic algorithm
 				if(Math.random() > 0.5){
 				
-				/*// Less importance to the worst solutions
+				/* // Greater importance to the worst solutions
 				 if(1 - (costNewSolution / costFinalSolution) > Math.random()){
-				 */
-				/*// Greater emphasis on the worst solutions
+				*/
+				
+				/* // Less emphasis on the worst solutions
 				 if((costNewSolution / costFinalSolution) > Math.random()){
-				 */
+				*/
 					finalSolution = newSolution;
 				}
 			}
