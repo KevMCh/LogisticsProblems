@@ -1,8 +1,6 @@
 package es.ull.siipc.problems.metaheuristics.tsp;
 
 import java.util.ArrayList;
-import es.ull.siipc.graph.*;
-
 import es.ull.siipc.graph.Graph;
 import es.ull.siipc.problems.TSP;
 
@@ -32,7 +30,6 @@ public class TabuSearch extends TSP {
 		do {
 
 			if (i == n) {
-				System.out.println("i: "+i);
 				end = true;
 			} else {
 				currentSolution = twoOptTabu(currentSolution);
@@ -42,7 +39,7 @@ public class TabuSearch extends TSP {
 				i++;
 			}
 
-		} while(end == true);
+		} while(end != true);
                  
 		return finalSolution;
 	}
